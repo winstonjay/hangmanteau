@@ -1,0 +1,8 @@
+config.php
+config.production.php
+
+# python files.
+env/
+*.pyc
+
+.env
