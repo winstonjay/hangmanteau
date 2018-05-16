@@ -1,6 +1,9 @@
 # Hangmanteau
+Hangmanteau is like the original game of hangman only with made-up portmanteau words.
+Currently in transition between versions.
 
-Hangmanteau is like the orignal game of hangman only with made-up portmanteau words. It runs as human verses computer and can be played in Facebook messegner or [online](https://doss.space/hangmanteau/).
-
-### :poop: About Words Used:
-These words used in Hangmanteau are made-up portmanteau words here, consisting of two real words overlap at least 2 characters. So, for example 'vodkazoo' could be a valid word here because it is 'vodka' + 'kazoo', combined as 'vod' + 'ka' + 'zoo'. The words are randomly generated.
+### :poop: What makes a word:
+Here word is constituted by the combination of two existing words that have least 2 letters
+of overlap. For example, `vodkazoo` could be a valid word as it constructible from the real
+words  `vodka` and `kazoo`. The combination is formed as 'vod' + 'ka' + 'zoo’. Words are
+generated randomly but are scored to try and produce the most interesting examples.
