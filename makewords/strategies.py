@@ -4,7 +4,6 @@ strategies.py
 strategies here are functions that take a list of candidate word tripples
 such as ('rand', 'dom', 'inate') from the two words 'random' and 'dominate',
 scores them and returns the top n results.
-
 '''
 from __future__ import print_function
 from __future__ import division
@@ -110,12 +109,14 @@ def trigram_pw_score(triple):
     word = cat(triple)
     s, M, e = map(len, triple)
     T = s + M + e
-    return (tri.log10_pword(word) * 16**(-T/M)) / T**2
+    w0 = (tri.log10_pword(word) * 16**(-T/M)) / T**3
+    w1 = noise_weight(triple) # 0.00 - 1.00
+    return w0 * w1
 
-# @debug_print(pw_score) needs fix
+@debug_print(trigram_pw_score)
 def strategy4(candidates, n):
     candidates = filter(original, candidates)
-    return best_n(set(candidates), pw_score, n)
+    return best_n(set(candidates), trigram_pw_score, n)
 
 # from: https://github.com/darius/languagetoys/blob/master/portmanteau.py
 def bacon_score(triple):

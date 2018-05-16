@@ -4,7 +4,7 @@ generate_words.py
 Here a portmanteau word is constituted by the combination of two existing words
 that have least 2 letters of overlap. For example, `vodkazoo` could be a valid
 word as it constructible from the real words  `vodka` and `kazoo`. The
-combination is formed as 'vod' + 'ka' + 'zoo’. Words are generated randomly
+combination is formed as 'vod' + 'ka' + 'zoo'. Words are generated randomly
 but are scored to try and produce the most interesting examples.
 
 The bulk of this file comes from Peter Norvig's design of computer progams
@@ -29,7 +29,7 @@ def portmanteau_words(words, strategy, n=50):
     candidates = generate_candidates(words)
     if not candidates:
         return []
-    return map(cat, strategy(candidates, n))
+    return strategy(candidates, n)
 
 cat = ''.join
 
@@ -76,6 +76,16 @@ if __name__ == '__main__':
         help="Strategy number from `strategies.py`. 1-4",
         type=int,
         required=True)
+    parser.add_argument(
+        "-o",
+        "--out",
+        help="filename to write results to.")
+    parser.add_argument(
+        "-k",
+        "--sample_count",
+        help="Number of samples to generate",
+        type=int,
+        default=100)
     args = parser.parse_args()
 
 
@@ -85,8 +95,13 @@ if __name__ == '__main__':
     strategy_name = "strategy%d" % args.strategy
     strategy = getattr(strategies, strategy_name)
 
-    if strategy is not None:
-        portmanteau_words(words, strategy, n=100)
-    else:
+    if strategy is None:
         print("ERROR: strategy '%s' does not exist" % strategy_name)
+    else:
+        parts = portmanteau_words(words, strategy, n=args.sample_count)
+        words = map(cat, parts)
+        if args.out:
+            with open(args.out, "w") as fp:
+                for word, tripple in zip(words, parts):
+                    fp.write("%s\t%s\n" % (word, " ".join(tripple)))
 
