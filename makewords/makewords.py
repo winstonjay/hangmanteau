@@ -23,12 +23,14 @@ import collections
 
 import strategies
 
-def portmanteau_words(words, strategy, n=50):
+def portmanteau_words(words, strategy=None, n=50):
     '''Given a list of words and a strategy, find the best n list of
     portmanteu words.'''
     candidates = generate_candidates(words)
     if not candidates:
         return []
+    if strategy is None:
+        return candidates[:n]
     return strategy(candidates, n)
 
 cat = ''.join
